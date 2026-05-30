@@ -20,6 +20,7 @@ import {
   Coins,
   ChevronLeft,
   ChevronRight,
+  HelpCircle,
   Settings
 } from 'lucide-react';
 import { User as UserType, CompanyProfile } from '../types';
@@ -59,6 +60,7 @@ export default function Sidebar({
     { id: 'drivers', name: 'Hồ sơ tài xế', icon: User, roles: ['admin', 'operator'] },
     { id: 'reports', name: 'Báo cáo & Thống kê', icon: BarChart3, roles: ['admin', 'operator'] },
     { id: 'users', name: 'Người dùng & Phân quyền', icon: Users, roles: ['admin'] },
+    { id: 'help', name: 'Hướng dẫn sử dụng', icon: HelpCircle, roles: ['admin', 'operator', 'driver'], badge: 'FAQ' },
     { id: 'schema', name: 'Supabase SQL Schema', icon: Database, roles: ['admin', 'operator'] }
   ];
 

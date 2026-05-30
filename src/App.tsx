@@ -40,6 +40,7 @@ import VehiclesList from './components/VehiclesList';
 import DriversList from './components/DriversList';
 import Reports from './components/Reports';
 import UsersList from './components/UsersList';
+import UserGuide from './components/UserGuide';
 import { Menu } from 'lucide-react';
 
 export default function App() {
@@ -689,6 +690,9 @@ export default function App() {
           />
         );
 
+      case 'help':
+        return <UserGuide />;
+
       default:
         return (
           <div className="p-8 text-center bg-slate-100 rounded-xl">
@@ -747,6 +751,7 @@ export default function App() {
                  currentTab === 'tracking' ? 'Xác nhận hạ dỡ hàng' :
                  currentTab === 'vehicles' ? 'Quản lý Đầu xe vận tải' :
                  currentTab === 'drivers' ? 'Quản lý Hồ sơ tài xế' :
+                 currentTab === 'help' ? 'Hướng dẫn vận hành hệ thống' :
                  currentTab === 'reports' ? 'Thống kê KPIs & Schema' : 'LogiSaaS ERP'}
               </span>
             </div>

@@ -560,6 +560,104 @@ export default function BillsList({
         </div>
       </div>
 
+      {/* ADDITIONAL SUMMARY STATISTICS SECTION TO FILL SPACE */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in">
+        
+        {/* Total Revenue & Payment Summary */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-3xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[10px] font-mono font-extrabold text-slate-400 uppercase tracking-widest">Tổng cước phí</span>
+            <div className="p-1.5 bg-blue-50 text-blue-600 rounded-lg">
+              <ArrowUpDown className="w-4 h-4" />
+            </div>
+          </div>
+          <div>
+            <h4 className="text-xl font-bold text-slate-900 leading-tight">
+              {formatVND(filteredBills.reduce((sum, b) => sum + (b.shippingFee || 0), 0))}
+            </h4>
+            <div className="flex items-center gap-2 mt-2">
+              <span className="text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded-md border border-emerald-100 font-bold">
+                Thu: {formatVND(filteredBills.filter(b => b.paymentStatus === 'paid').reduce((sum, b) => sum + (b.shippingFee || 0), 0))}
+              </span>
+              <span className="text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded-md border border-amber-100 font-bold">
+                Nợ: {formatVND(filteredBills.filter(b => b.paymentStatus === 'unpaid').reduce((sum, b) => sum + (b.shippingFee || 0), 0))}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Goods & Package Volume Stats */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-3xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[10px] font-mono font-extrabold text-slate-400 uppercase tracking-widest">Khối lượng hàng</span>
+            <div className="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg">
+              <Truck className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-slate-500 font-medium">Trọng lượng:</span>
+              <span className="text-sm font-bold text-slate-800">{filteredBills.reduce((sum, b) => sum + b.totalWeight, 0).toLocaleString()} kg</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-slate-500 font-medium">Thể tích:</span>
+              <span className="text-sm font-bold text-slate-800">{filteredBills.reduce((sum, b) => sum + b.totalVolume, 0).toFixed(2)} m³</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Loading & Delivery Progress */}
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-3xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[10px] font-mono font-extrabold text-slate-400 uppercase tracking-widest">Tiến độ vận hành</span>
+            <div className="p-1.5 bg-emerald-50 text-emerald-600 rounded-lg">
+              <CheckCircle className="w-4 h-4" />
+            </div>
+          </div>
+          <div>
+            <div className="flex items-end justify-between mb-1.5">
+              <span className="text-xs font-bold text-slate-700">Đã giao tận nơi</span>
+              <span className="text-xs font-mono font-bold text-emerald-600">
+                {Math.round((filteredBills.reduce((sum, b) => sum + b.packagesDelivered, 0) / Math.max(1, filteredBills.reduce((sum, b) => sum + b.totalPackages, 0))) * 100)}%
+              </span>
+            </div>
+            <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden flex">
+              <div 
+                className="bg-emerald-500 h-full transition-all"
+                style={{ width: `${(filteredBills.reduce((sum, b) => sum + b.packagesDelivered, 0) / Math.max(1, filteredBills.reduce((sum, b) => sum + b.totalPackages, 0))) * 100}%` }}
+              />
+              <div 
+                className="bg-blue-400 h-full transition-all"
+                style={{ width: `${((filteredBills.reduce((sum, b) => sum + b.packagesLoaded, 0) - filteredBills.reduce((sum, b) => sum + b.packagesDelivered, 0)) / Math.max(1, filteredBills.reduce((sum, b) => sum + b.totalPackages, 0))) * 100}%` }}
+              />
+            </div>
+            <p className="text-[10px] text-slate-400 mt-2 italic font-medium">
+              * Tổng cộng {filteredBills.reduce((sum, b) => sum + b.totalPackages, 0)} kiện trong danh sách này
+            </p>
+          </div>
+        </div>
+
+        {/* Quick Insights / Alert */}
+        <div className="bg-slate-900 p-5 rounded-2xl shadow-lg flex flex-col justify-between overflow-hidden relative group">
+          <div className="absolute -right-4 -top-4 w-24 h-24 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all duration-500" />
+          <div className="flex items-center justify-between mb-3 relative z-10">
+            <span className="text-[10px] font-mono font-extrabold text-slate-400 uppercase tracking-widest">Tiền thu hộ (COD)</span>
+            <div className="p-1.5 bg-blue-500/20 text-blue-400 rounded-lg">
+              <AlertCircle className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="relative z-10">
+            <h4 className="text-xl font-bold text-white mb-1">
+              {formatVND(filteredBills.reduce((sum, b) => sum + b.cod, 0))}
+            </h4>
+            <p className="text-[10px] text-slate-500 leading-relaxed max-w-[180px]">
+              Tổng số tiền tài xế cần thu hộ từ người nhận hàng cho các đơn trong danh mục này.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
       {/* CREATE BILL FORM MODAL */}
       {isCreateModalOpen && (
         <div className="fixed inset-0 z-[100] overflow-y-auto bg-slate-900/50 backdrop-blur-sm">

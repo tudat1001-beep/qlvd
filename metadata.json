@@ -1,5 +1,5 @@
 {
-  "name": "Remix: LTL Transportation Management System",
+  "name": "Quản lý vận tải",
   "description": "Hệ thống quản lý vận tải hàng hóa lẻ (LTL) chuyên nghiệp với chức năng tách Bill lên nhiều chuyến xe.",
   "requestFramePermissions": [],
   "majorCapabilities": [
