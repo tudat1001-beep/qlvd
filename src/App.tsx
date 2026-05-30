@@ -706,7 +706,7 @@ export default function App() {
     <div className="flex h-screen bg-slate-50 font-sans overflow-hidden">
       
       {/* Left Navigation Sidebar */}
-      <div className={`transition-all duration-300 overflow-hidden flex h-screen shrink-0 ${isSidebarCollapsed ? 'w-20' : 'w-80'}`}>
+      <div className={`transition-all duration-300 overflow-hidden flex h-screen shrink-0 ${isSidebarCollapsed ? 'w-20' : 'w-72'}`}>
         <Sidebar
           currentTab={currentTab}
           setCurrentTab={(tab) => {
@@ -743,7 +743,7 @@ export default function App() {
             </button>
             <div className="flex items-center gap-3">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-xs font-sans font-bold text-slate-600 uppercase tracking-wider">
+              <span className="text-sm font-sans font-bold text-slate-600 uppercase tracking-wider">
                 {currentTab === 'dashboard' ? 'Tổng quan Bảng điều khiển' :
                  currentTab === 'bills' ? 'Quản lý Vận đơn lẻ' :
                  currentTab === 'trips' ? 'Chỉ huy Chuyến tải' :
@@ -758,16 +758,16 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-5">
-            <div className="hidden sm:flex items-center gap-2 font-mono text-[11px] text-slate-400 bg-slate-150/50 px-3 py-1 rounded-lg border border-slate-200/50">
+            <div className="hidden sm:flex items-center gap-2 font-mono text-xs text-slate-400 bg-slate-150/50 px-3 py-1.5 rounded-lg border border-slate-200/50">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
               <span>LogisSaaS Enterprise</span>
             </div>
             <div className="flex items-center gap-3 border-l border-slate-200 pl-4">
               <div className="text-right hidden sm:block">
-                <div className="text-xs font-bold text-slate-800 leading-tight">{dbState.currentUser.fullName}</div>
-                <div className="text-[10px] text-slate-400 font-mono uppercase mt-0.5">{dbState.currentUser.role}</div>
+                <div className="text-sm font-bold text-slate-800 leading-tight">{dbState.currentUser.fullName}</div>
+                <div className="text-[11px] text-slate-400 font-mono uppercase mt-0.5">{dbState.currentUser.role}</div>
               </div>
-              <div className="h-9 w-9 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs shadow-sm border border-blue-700/10 uppercase">
+              <div className="h-10 w-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-sm border border-blue-700/10 uppercase">
                 {dbState.currentUser.fullName.split(' ').pop()?.slice(0, 2) || dbState.currentUser.fullName.slice(0, 2)}
               </div>
             </div>
@@ -775,7 +775,7 @@ export default function App() {
         </header>
 
         {/* Dynamic Inner views container */}
-        <div className="flex-1 overflow-y-auto p-8 max-w-7xl w-full mx-auto">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 max-w-[1600px] w-full mx-auto">
           {renderTabContent()}
         </div>
 
